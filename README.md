@@ -1,11 +1,17 @@
 # sonos-sync-group-volume
 
-The intended use of this application is to control all grouped Sonos using TV remote control (via Beam etc.).
+## Background
+
+This application solves a very specific use case that Sonos doesn't support out-of-the-box, i.e control all grouped Sonos using a TV remote control (via Beam etc.).
+In my case I have a Beam connected via ARC to the TV. I also have an Amp that is grouped with the Beam so that the Amp plays whatever the TV (Beam) is playing. This works but the TV remote only controls the volume of the Beam, not the members of the group. This application solves that issue by listening for volume changes broadcasted by the 'master' speaker (in my case the Beam) and synchronizing the group members volume accordingly so that the group volume is in sync.
+
+I've implemeted it so that you specify a 'master' speaker and whenever its volume change the application checks if the speaker has any group members. If it does the application updates the volume for all other speakers in the group. This means that you can kind of enable/disable this application by ungrouping the speakers/rooms.
+I've also implemented the volume change relatively so that you can adjust the volume relationship between the speakers in the Sonos app. If you decrease the 'master' speakers volume by 2 with the TV remote, all other speakers in the group will decrease its volume by 2, keeping the volume relationship in sync.
 
 The application requires two different Node.js servers to be connected to the same network as your Sonos speakers to function (I use a Raspberry Pi but anything that can run Node.js should work).
 [An HTTP API bridge for Sonos](https://github.com/jishi/node-sonos-http-api) for sending webhooks whenever something on the Sonos network changes and the server in this repository for receiving those webhooks and act on them.
 
-I got the original idea from https://github.com/arcsoundguy/sonos-group-volume-with-tv-remote but wanted something that would be a little bit easier to configure with less dependecies.
+I got the original idea from https://github.com/arcsoundguy/sonos-group-volume-with-tv-remote but wanted something that was a bit more flexible and would be a little bit easier to configure with less dependecies.
 
 ---
 
