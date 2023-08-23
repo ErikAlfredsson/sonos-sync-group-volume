@@ -53,7 +53,7 @@ exports.getGroupMembers = async (relevantGroups) => {
 
 /**
  * @members string array, ex: ["Sonos One 1", "Sonos One 2"]
- * @volume number, ex: 67
+ * @volume string, relative volume change, ex: +6/-2
  */
 exports.synchronizeGroupVolume = async (members, volume) => {
   return await Promise.all(

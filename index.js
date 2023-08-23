@@ -6,8 +6,10 @@ const {
   synchronizeMute,
 } = require("./utils");
 
+/** 'master' speakers */
+const releventGroups = ["TV"];
+
 const relevantWebhooks = ["volume-change", "mute-change"];
-const releventGroups = ["Kontor"];
 
 const app = express();
 
@@ -39,8 +41,11 @@ app.post("/sonos", async (req, res) => {
 
   switch (type) {
     case "volume-change": {
+      const diff = data.newVolume - data.previousVolume;
+      const relativeChange = diff > 0 ? `+${diff}` : `${diff}`;
+
       if (groupMembers && groupMembers.length > 0) {
-        await synchronizeGroupVolume(groupMembers, data.newVolume);
+        await synchronizeGroupVolume(groupMembers, relativeChange);
       }
     }
     case "mute-change": {
