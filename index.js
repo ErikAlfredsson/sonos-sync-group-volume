@@ -14,6 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post("/sonos", async (req, res) => {
+  console.log("webhook recieved", req.body);
   // early exit if we don't have required data
   if (
     !req.body ||
