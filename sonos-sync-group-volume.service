@@ -1,0 +1,13 @@
+[Unit]
+Description=Sonos API
+After=syslog.target network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/home/pi/start-sonos-api.sh
+User=root
+
+[Install]
+WantedBy=multi-user.target
