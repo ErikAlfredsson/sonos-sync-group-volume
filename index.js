@@ -9,6 +9,8 @@ const {
 /** 'master' speakers */
 const releventGroups = ["TV"];
 
+const useRelativeVolume = false;
+
 const relevantWebhooks = ["volume-change", "mute-change"];
 
 const startupIdleTime = 3000;
@@ -54,7 +56,10 @@ app.post("/sonos", async (req, res) => {
       const relativeChange = diff > 0 ? `+${diff}` : `${diff}`;
 
       if (groupMembers && groupMembers.length > 0) {
-        await synchronizeGroupVolume(groupMembers, relativeChange);
+        await synchronizeGroupVolume(
+          groupMembers,
+          useRelativeVolume ? relativeChange : data.newVolume
+        );
       }
       break;
     }
