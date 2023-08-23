@@ -1,7 +1,5 @@
 # sonos-sync-group-volume
 
-## Background
-
 This application solves a very specific use case that Sonos doesn't support out-of-the-box, i.e control all grouped Sonos using a TV remote control (via Beam etc.).
 In my case I have a Beam connected via ARC to the TV. I also have an Amp that is grouped with the Beam so that the Amp plays whatever the TV (Beam) is playing. This works but the TV remote only controls the volume of the Beam, not the members of the group. This application solves that issue by listening for volume changes broadcasted by the 'master' speaker (in my case the Beam) and synchronizing the group members volume accordingly so that the group volume is in sync.
 
@@ -13,14 +11,12 @@ The application requires two different Node.js servers to be connected to the sa
 
 I got the original idea from https://github.com/arcsoundguy/sonos-group-volume-with-tv-remote but wanted something that was a bit more flexible and would be a little bit easier to configure with less dependecies.
 
----
+**If you have a question or are having trouble getting started just post an issue!**
 
 ## Dependencies
 
 - Node.js
 - NPM
-
----
 
 ## Installation
 
@@ -28,14 +24,12 @@ I got the original idea from https://github.com/arcsoundguy/sonos-group-volume-w
    `git clone --recurse-submodules https://github.com/ErikAlfredsson/sonos-sync-group-volume.git`
 2. Navigtate into the repository: `cd sonos-sync-group-volume`
 3. Install dependencies: `npm install`
-4. Open the file `index.js` and replace the contents of the variable `relevantGroups` with the names of the rooms that are to be considered as 'master'.
+4. Install submodule dependencies: `(cd node-sonos-http-api && npm install --production)`
+5. Open the file `index.js` and replace the contents of the variable `relevantGroups` with the names of the rooms that are to be considered as 'master'.
    For instance if you have a room named _TV_ and you want all of its group members to synchronize its volume with _TV_ then the line with relevantGroups should look like this:
    `const releventGroups = ["TV"];`
-   If you want to synchronize multiple groups you can do this by adding them as well like so:
+   If you want to synchronize multiple groups (independently) you can do this by adding them as well like so:
    `const releventGroups = ["TV", "TV2"];` etc.
-5. Install submodule dependencies: `(cd node-sonos-http-api && npm install --production)`
-
----
 
 ## Usage
 
