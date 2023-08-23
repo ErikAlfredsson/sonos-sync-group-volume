@@ -35,9 +35,7 @@ exports.getGroupMembers = async (relevantGroups) => {
       const membersExcludingSelf = members.filter(
         (member) => member.roomName !== roomName
       );
-      const memberNames = membersExcludingSelf.map(
-        (member) => member.state.roomName
-      );
+      const memberNames = membersExcludingSelf.map((member) => member.roomName);
 
       return {
         ...groups,

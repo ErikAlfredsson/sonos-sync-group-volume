@@ -11,12 +11,19 @@ const releventGroups = ["TV"];
 
 const relevantWebhooks = ["volume-change", "mute-change"];
 
+const startupIdleTime = 3000;
+let startTime;
+
 const app = express();
 
 app.use(bodyParser.json());
 
 app.post("/sonos", async (req, res) => {
-  console.log("webhook recieved", req.body);
+  // ignore initial webhooks that broadcast initial state
+  if (new Date().getTime() - startTime < startupIdleTime) {
+    return;
+  }
+
   // early exit if we don't have required data
   if (
     !req.body ||
@@ -36,6 +43,8 @@ app.post("/sonos", async (req, res) => {
     return;
   }
 
+  console.log("webhook recieved", req.body);
+
   const currentState = await getGroupMembers(releventGroups);
   const groupMembers = currentState[data.roomName];
 
@@ -47,11 +56,13 @@ app.post("/sonos", async (req, res) => {
       if (groupMembers && groupMembers.length > 0) {
         await synchronizeGroupVolume(groupMembers, relativeChange);
       }
+      break;
     }
     case "mute-change": {
       if (groupMembers && groupMembers.length > 0) {
         synchronizeMute(groupMembers, data.newMute);
       }
+      break;
     }
     default:
       break;
@@ -63,5 +74,6 @@ app.post("/sonos", async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
+  startTime = new Date().getTime();
   console.log(`Webhook receiver listening on port ${PORT}`);
 });

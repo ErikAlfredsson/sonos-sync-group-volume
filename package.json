@@ -6,7 +6,7 @@
   "scripts": {
     "api": "cd node-sonos-http-api && npm start",
     "reciever": "node index.js",
-    "start": "concurrently --kill-others \"npm run api\" \"npm run reciever\""
+    "start": "concurrently --kill-others \"npm run reciever\" \"npm run api\""
   },
   "keywords": [],
   "author": "",
