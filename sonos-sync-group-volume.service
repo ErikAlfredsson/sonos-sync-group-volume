@@ -6,7 +6,7 @@ After=syslog.target network.target
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/home/pi/start-sonos-api.sh
+ExecStart=/home/pi/sonos-sync-group-volume/sonos-sync-group-volume.sh
 User=root
 
 [Install]

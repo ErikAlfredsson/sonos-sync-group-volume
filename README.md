@@ -4,7 +4,11 @@ This application solves a very specific use case that Sonos doesn't support out-
 In my case I have a Beam connected via ARC to the TV. I also have an Amp that is grouped with the Beam so that the Amp plays whatever the TV (Beam) is playing. This works but the TV remote only controls the volume of the Beam, not the members of the group. This application solves that issue by listening for volume changes broadcasted by the 'master' speaker (in my case the Beam) and synchronizing the group members volume accordingly so that the group volume is in sync.
 
 I've implemeted it so that you specify a 'master' speaker and whenever its volume change the application checks if the speaker has any group members. If it does the application updates the volume for all other speakers in the group. This means that you can kind of enable/disable this application by ungrouping the speakers/rooms.
-I've also implemented the volume change relatively so that you can adjust the volume relationship between the speakers in the Sonos app. If you decrease the 'master' speakers volume by 2 with the TV remote, all other speakers in the group will decrease its volume by 2, keeping the volume relationship in sync.
+I've also implemented the option to use relative volume change so that you can adjust the volume relationship between the speakers in the Sonos app. If you decrease the 'master' speakers volume by 2 with the TV remote, all other speakers in the group will decrease its volume by 2, keeping the volume relationship in sync. However there seems to be some cases where they can end up out of sync anyways, will try to improve that at some point.
+
+If you want to try relative volume, change the line:
+`const useRelativeVolume = false;` to `const useRelativeVolume = true;` in index.js.
+If you want to use absolute volume so that the volume of the 'master' is exaclty mirrored to the group members no change is needed.
 
 The application requires two different Node.js servers to be connected to the same network as your Sonos speakers to function (I use a Raspberry Pi but anything that can run Node.js should work).
 [An HTTP API bridge for Sonos](https://github.com/jishi/node-sonos-http-api) for sending webhooks whenever something on the Sonos network changes and the server in this repository for receiving those webhooks and act on them.
@@ -36,3 +40,9 @@ I got the original idea from https://github.com/arcsoundguy/sonos-group-volume-w
 _Ideally you would want to daemonize the process with systemd for instance but I won't cover that in this readme._
 
 Start the server with `npm start`.
+
+Edit:
+I've added two scripts:
+`sonos-sync-group-volume.sh` and `sonos-sync-group-volume.service`.
+
+These can be seen as a starting point to how to daemonize the application. Might update the readme when I have some more time to spare.
