@@ -20,7 +20,6 @@ I got the original idea from https://github.com/arcsoundguy/sonos-group-volume-w
 ## Dependencies
 
 - Node.js (^14.13.0 || >=16.0.0)
-- NPM
 
 ## Installation
 
