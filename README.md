@@ -8,7 +8,7 @@ I've also implemented the option to use relative volume change so that you can a
 
 If you want to try relative volume, change the line:
 `const useRelativeVolume = false;` to `const useRelativeVolume = true;` in index.js.
-If you want to use absolute volume so that the volume of the 'master' is exaclty mirrored to the group members no change is needed.
+If you want to use absolute volume so that the volume of the 'master' is exactly mirrored to the group members no change is needed.
 
 The application requires two different Node.js servers to be connected to the same network as your Sonos speakers to function (I use a Raspberry Pi but anything that can run Node.js should work).
 [An HTTP API bridge for Sonos](https://github.com/jishi/node-sonos-http-api) for sending webhooks whenever something on the Sonos network changes and the server in this repository for receiving those webhooks and act on them.
