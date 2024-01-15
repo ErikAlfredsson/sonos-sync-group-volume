@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 
-const BASE_URL = "http://localhost:5005";
+const BASE_URL = "http://127.0.0.1:5005";
 
 let THROTTLE = 3000;
 
